@@ -22,11 +22,7 @@ name: Maven publish
 on: workflow_call
 
 jobs:
-  test:
-    # re-use test/verify workflow
-    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
-  build:
-    needs: test
+  publish:
     runs-on: ubuntu-latest
     steps:
       # https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-java-with-maven
