@@ -7,7 +7,7 @@
 #
 #   jobs:
 #     publish:
-#       uses: <owner>/github-workflows/.github/workflows/maven-publish.yml@v1
+#       uses: FAIRDataTeam/github-workflows/.github/workflows/maven-publish.yml@v1
 #       secrets: inherit
 #
 # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idsecretsinherit
@@ -24,7 +24,7 @@ on: workflow_call
 jobs:
   test:
     # re-use test/verify workflow
-    uses: dennisvang/github-workflows/.github/workflows/maven-verify.yml@main
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
   build:
     needs: test
     runs-on: ubuntu-latest
