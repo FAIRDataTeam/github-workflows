@@ -1,0 +1,54 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+#
+# The caller repo must have a properly comfigured pom.xml, using the central-publishing-maven-plugin,
+# as described in https://central.sonatype.org/publish/publish-portal-maven/
+#
+# Secrets must be inherited from the caller, for example, in the caller workflow:
+#
+#   jobs:
+#     publish:
+#       uses: dennisvang/github-workflows/.github/workflows/maven-publish.yml@v1
+#       secrets: inherit
+#
+# https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idsecretsinherit
+#
+# For more information see:
+#
+# - https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+# - https://docs.github.com/en/actions/sharing-automations/reusing-workflows
+
+name: Maven publish
+
+on: workflow_call
+
+jobs:
+  test:
+    # re-use test/verify workflow
+    uses: dennisvang/github-workflows/.github/workflows/maven-verify@main
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      # https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-java-with-maven
+      # https://github.com/actions/setup-java
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: maven
+          # https://central.sonatype.org/publish/generate-portal-token/
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Publish to Maven Central Portal
+        # if autoPublish is false (see pom.xml), we need to publish manually via https://central.sonatype.com/publishing/deployments
+        run: mvn --batch-mode deploy
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}

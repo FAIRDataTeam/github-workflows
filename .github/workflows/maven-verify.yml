@@ -1,0 +1,31 @@
+# https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-java-with-maven
+# https://docs.github.com/en/actions/sharing-automations/reusing-workflows
+
+name: Maven verify
+
+on: workflow_call
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # temurin LTS versions
+        version: [17, 21]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # setup
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.version }}
+          distribution: 'temurin'
+          cache: maven
+
+      # test and verify
+      # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+      - name: Run maven verify (skip GPG signing)
+        run: mvn --batch-mode --update-snapshots --fail-fast -Dgpg.skip verify
