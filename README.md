@@ -27,6 +27,16 @@ jobs:
     secrets: inherit
 ```
 
+It is also possible to specify additional options for the maven-verify workflow, for example:
+
+```yaml
+jobs:
+  test:
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
+    with:
+      mvn_options: tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
+```
+
 ## Releases
 
 Releases follow [semantic versioning]. 
