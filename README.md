@@ -51,8 +51,13 @@ Releases follow [semantic versioning].
 To get the latest stable release you can refer to the major version only, e.g. `v1` instead of `v1.2.3`.
 Also see [action versioning].
 
+>[!NOTE]
+> 
+>Contributors, please read the [contribution guidelines] for instructions w.r.t. releases.
+
 [action versioning]: https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations
 [avoiding-duplication]: https://docs.github.com/en/actions/sharing-automations/avoiding-duplication
+[contribution guidelines]: ./CONTRIBUTING
 [reusing-workflows]: https://docs.github.com/en/actions/sharing-automations/reusing-workflows
 [semantic versioning]: https://semver.org/
 [sharing automations]: https://docs.github.com/en/actions/sharing-automations
