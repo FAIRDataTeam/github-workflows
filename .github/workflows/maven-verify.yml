@@ -3,7 +3,18 @@
 
 name: Maven verify
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      # calling workflow can specify inputs as follows:
+      #     uses: <this reusable workflow>
+      #     with:
+      #       mvn_options: <custom options>
+      mvn_options:
+        description: 'extra maven command line options (space separated)'
+        default: ''
+        required: false
+        type: string
 
 jobs:
   build:
@@ -28,4 +39,4 @@ jobs:
       # test and verify
       # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
       - name: Run maven verify (skip GPG signing)
-        run: mvn --batch-mode --update-snapshots --fail-fast -Dgpg.skip verify
+        run: mvn --batch-mode --update-snapshots --fail-fast -Dgpg.skip ${{ inputs.mvn_options }} verify
