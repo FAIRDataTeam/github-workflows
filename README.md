@@ -9,6 +9,14 @@ For more info about reusing workflows, see [sharing automations] documentation, 
 - [reusing-workflows]
 - [sharing-actions-and-workflows-with-your-organization]
 
+## Dependent repos
+
+The following [FAIRDataTeam] repositories depend on the reusable workflows from this repo:
+
+- [rdf-resource-resolver]
+- [spring-rdf-migration]
+- [spring-security-acl-mongodb]
+
 ## Example
 
 An example of a publication workflow that is triggered when a release is created, and re-uses two workflows:
@@ -49,3 +57,8 @@ Also see [action versioning].
 [semantic versioning]: https://semver.org/
 [sharing automations]: https://docs.github.com/en/actions/sharing-automations
 [sharing-actions-and-workflows-with-your-organization]: https://docs.github.com/en/actions/sharing-automations/sharing-actions-and-workflows-with-your-organization
+
+[FAIRDataTeam]: https://github.com/FAIRDataTeam
+[rdf-resource-resolver]: https://github.com/FAIRDataTeam/rdf-resource-resolver
+[spring-rdf-migration]: https://github.com/FAIRDataTeam/spring-rdf-migration
+[spring-security-acl-mongodb]: https://github.com/FAIRDataTeam/spring-security-acl-mongodb
