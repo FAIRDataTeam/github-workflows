@@ -11,5 +11,6 @@ on:
 
 jobs:
   publish:
-    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@main
+    # FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@main
+    uses: ./.github/workflows/docker-publish.yml
     secrets: inherit
