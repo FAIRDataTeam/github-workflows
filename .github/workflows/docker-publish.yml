@@ -10,7 +10,14 @@
 #   - `vars.DOCKER_HUB_USERNAME`
 #   - `secrets.DOCKER_HUB_PASSWORD`
 #
-# Secrets must be inherited from the caller, for example, in the caller workflow:
+# The workflow should be triggered on `push` and `pull_request` (see [1]),
+# and secrets must be inherited from the caller. For example:
+#
+#   on:
+#     push:
+#       branches:
+#         - <default-branch-name>
+#     pull_request:
 #
 #   jobs:
 #     publish:
@@ -21,13 +28,6 @@
 
 name: Docker publish
 
-# calling workflow triggers (see [1])
-#
-#     on:
-#       push:
-#         branches:
-#           - <default-branch-name>
-#       pull_request:
 on: workflow_call
 
 jobs:
