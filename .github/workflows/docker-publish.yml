@@ -5,6 +5,18 @@
 # Based on most recent docker guide [1], with some adaptations based on
 # existing FDP and FDP-client workflows.
 #
+# The following variables and secrets are used (conforming to existing names):
+#   - `vars.DOCKER_IMAGE_NAME`
+#   - `vars.DOCKER_HUB_USERNAME`
+#   - `secrets.DOCKER_HUB_PASSWORD`
+#
+# Secrets must be inherited from the caller, for example, in the caller workflow:
+#
+#   jobs:
+#     publish:
+#       uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+#       secrets: inherit
+#
 # [1]: https://docs.docker.com/guides/gha/
 
 name: Docker publish
