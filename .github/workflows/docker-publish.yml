@@ -24,6 +24,8 @@
 #       uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
 #       secrets: inherit
 #
+# TODO: Alternatively, we could push on release creation only.
+#
 # [1]: https://docs.docker.com/guides/gha/
 
 name: Docker publish
@@ -80,6 +82,7 @@ jobs:
           # https://docs.docker.com/build/concepts/dockerfile/#filename
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
+          # alternative: push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           # https://docs.docker.com/build/metadata/annotations/
