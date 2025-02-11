@@ -15,24 +15,30 @@ on:
         default: ''
         required: false
         type: string
+      runner:
+        # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+        description: 'label of the hosted runner'
+        default: 'ubuntu-latest'
+        required: false
+        type: string
+      java-version:
+        description: 'java version for use with the setup-java action'
+        default: 21
+        required: false
+        type: number
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        # temurin LTS versions
-        version: [17, 21]
+    runs-on: ${{ inputs.runner }}
 
     steps:
       - uses: actions/checkout@v4
 
-      # setup
+      # https://github.com/actions/setup-java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.version }}
+          java-version: ${{ inputs.java-version }}
           distribution: 'temurin'
           cache: maven
 
