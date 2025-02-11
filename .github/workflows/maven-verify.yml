@@ -32,18 +32,20 @@ jobs:
     runs-on: ${{ inputs.runner }}
 
     steps:
-      - uses: actions/checkout@v4
+      - # https://github.com/actions/checkout
+        name: Clone repository
+        uses: actions/checkout@v4
 
-      # https://github.com/actions/setup-java
-      - name: Setup Java
+      - # https://github.com/actions/setup-java
+        name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: ${{ inputs.java-version }}
           distribution: 'temurin'
           cache: maven
 
-      # test and verify
-      # (note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase)
-      # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-      - name: Run maven verify
+      - # test and verify
+        # (note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase)
+        # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+        name: Run maven verify
         run: mvn --batch-mode --update-snapshots --fail-fast ${{ inputs.mvn-options }} verify
