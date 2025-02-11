@@ -1,43 +1,11 @@
 # This workflow builds a Docker image and uploads it to Docker hub.
 #
-# For pull requests, nothing is uploaded, but a test build is created.
+# If the push input id false, the image is built but not uploaded.
+#
+# Secrets must be inherited from the caller.
 #
 # Based on most recent docker guide [1], with some adaptations based on
 # existing FDP and FDP-client workflows.
-#
-# The following variables and secrets are used (conforming to existing names):
-#   - `vars.DOCKER_IMAGE_NAME`
-#   - `vars.DOCKER_HUB_USERNAME`
-#   - `secrets.DOCKER_HUB_PASSWORD`
-#
-# Secrets must be inherited from the caller.
-# The workflow could be triggered on `push` and `pull_request` (see [1]). For example:
-#
-#    on:
-#      push:
-#        branches:
-#          - develop
-#      pull_request:
-#
-#    jobs:
-#      publish:
-#        uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
-#        secrets: inherit
-#        with:
-#          push: ${{ github.event_name != 'pull_request' }}
-#
-# Alternatively, we could push on release creation only, for example:
-#
-#    on:
-#      release:
-#        types: [created]
-#
-#    jobs:
-#      publish:
-#        uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
-#        secrets: inherit
-#        with:
-#          push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
 #
 # [1]: https://docs.docker.com/guides/gha/
 
