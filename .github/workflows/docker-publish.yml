@@ -71,8 +71,7 @@ jobs:
           # https://docs.docker.com/build/concepts/dockerfile/#filename
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          # alternative: push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           # https://docs.docker.com/build/metadata/annotations/
           annotations: ${{ steps.meta.outputs.annotations }}
