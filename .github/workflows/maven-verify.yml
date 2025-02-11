@@ -48,6 +48,10 @@ on:
         default: 0
         required: false
         type: number
+      db-version:
+        default: 5
+        required: false
+        type: number
 
 jobs:
   build:
@@ -59,7 +63,7 @@ jobs:
         uses: actions/checkout@v4
 
       - # https://github.com/ikalnytskyi/action-setup-postgres
-        # copied from FDP build.yml
+        # copied from FDP develop (3ff9f64) build.yml
         # TODO: can we use the pre-installed postgres instead of this action?
         # (see readme files in https://github.com/actions/runner-images/tree/main/images)
         name: Setup PostgreSQL database
@@ -70,6 +74,21 @@ jobs:
           password: ${{ inputs.db-password }}
           database: ${{ inputs.db-name }}
           port: ${{ inputs.db-port }}
+
+      - # https://github.com/ankane/setup-mongodb
+        # copied from FDP v1.17.2 build.yml
+        # TODO: ankane/setup-mongodb is a one-man band, should we use an alternative?
+        # (see e.g. https://github.com/supercharge/mongodb-github-action)
+        name: Set up MongoDB
+        if: inputs.db-type == 'mongodb'
+        uses: ankane/setup-mongodb@v1
+        with:
+          mongodb-version: ${{ inputs.db-version }}
+
+      - name: Check MongoDB
+        if: inputs.db-type == 'mongodb'
+        run: |
+          mongo --eval "db.version()"
 
       - # https://github.com/actions/setup-java
         name: Setup Java
