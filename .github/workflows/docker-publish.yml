@@ -10,27 +10,48 @@
 #   - `vars.DOCKER_HUB_USERNAME`
 #   - `secrets.DOCKER_HUB_PASSWORD`
 #
-# The workflow should be triggered on `push` and `pull_request` (see [1]),
-# and secrets must be inherited from the caller. For example:
+# Secrets must be inherited from the caller.
+# The workflow could be triggered on `push` and `pull_request` (see [1]). For example:
 #
-#   on:
-#     push:
-#       branches:
-#         - <default-branch-name>
-#     pull_request:
+#    on:
+#      push:
+#        branches:
+#          - develop
+#      pull_request:
 #
-#   jobs:
-#     publish:
-#       uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
-#       secrets: inherit
+#    jobs:
+#      publish:
+#        uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+#        secrets: inherit
+#        with:
+#          push: ${{ github.event_name != 'pull_request' }}
 #
-# TODO: Alternatively, we could push on release creation only.
+# Alternatively, we could push on release creation only, for example:
+#
+#    on:
+#      release:
+#        types: [created]
+#
+#    jobs:
+#      publish:
+#        uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+#        secrets: inherit
+#        with:
+#          push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
 #
 # [1]: https://docs.docker.com/guides/gha/
 
 name: Docker publish
 
-on: workflow_call
+on:
+  workflow_call:
+    # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs
+    inputs:
+      # the caller can specify whether to push the image to docker hub
+      push:
+        description: 'Determines if the resulting Docker image is pushed to Docker Hub'
+        required: true
+        type: boolean
 
 jobs:
   build:
