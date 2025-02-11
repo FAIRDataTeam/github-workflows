@@ -26,24 +26,85 @@ on:
         default: 21
         required: false
         type: number
+      db-type:
+        description: 'type of database: postgresql or mongodb'
+        default: ''
+        required: false
+        type: string
+      db-name:
+        description: 'name of database to be created'
+        default: ''
+        required: false
+        type: string
+      db-username:
+        default: ''
+        required: false
+        type: string
+      db-password:
+        default: ''
+        required: false
+        type: string
+      db-port:
+        default: 0
+        required: false
+        type: number
+      db-version:
+        default: 5
+        required: false
+        type: number
 
 jobs:
   build:
     runs-on: ${{ inputs.runner }}
 
     steps:
-      - uses: actions/checkout@v4
+      - # https://github.com/actions/checkout
+        name: Clone repository
+        uses: actions/checkout@v4
 
-      # https://github.com/actions/setup-java
-      - name: Setup Java
+      - # https://github.com/ikalnytskyi/action-setup-postgres
+        # copied from FDP develop (3ff9f64) build.yml
+        # TODO: can we use the pre-installed postgres instead of this action?
+        # (see readme files in https://github.com/actions/runner-images/tree/main/images)
+        name: Setup PostgreSQL database
+        if: inputs.db-type == 'postgresql'
+        uses: ikalnytskyi/action-setup-postgres@v7
+        with:
+          username: ${{ inputs.db-username }}
+          password: ${{ inputs.db-password }}
+          database: ${{ inputs.db-name }}
+          port: ${{ inputs.db-port }}
+
+      - # https://github.com/ankane/setup-mongodb
+        # copied from FDP v1.17.2 build.yml
+        # TODO: ankane/setup-mongodb is a one-man band, should we use an alternative?
+        # (see e.g. https://github.com/supercharge/mongodb-github-action)
+        name: Set up MongoDB
+        if: inputs.db-type == 'mongodb'
+        uses: ankane/setup-mongodb@v1
+        with:
+          mongodb-version: ${{ inputs.db-version }}
+
+      - name: Check MongoDB
+        if: inputs.db-type == 'mongodb'
+        run: |
+          mongo --eval "db.version()"
+
+      - # https://github.com/actions/setup-java
+        name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: ${{ inputs.java-version }}
           distribution: 'temurin'
           cache: maven
 
-      # test and verify
-      # (note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase)
-      # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-      - name: Run maven verify
+      - # test and verify
+        # Note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase [1].
+        # A spring-boot profile can be specified, e.g. `mvn-options: '-D"spring.profiles.active"=testing'`.
+        # (beware: the quotes around spring.profiles.active are required when using a Windows runner)
+        # Currently [2] it is not possible to pass env variables from caller to a reusable workflow, but, if necessary,
+        # we can override settings using `mvn-options`, e.g. `spring.datasource.url` etc. (see FDP application.yml).
+        # [1]: https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+        # [2]: https://docs.github.com/en/actions/sharing-automations/reusing-workflows#limitations
+        name: Run maven verify
         run: mvn --batch-mode --update-snapshots --fail-fast ${{ inputs.mvn-options }} verify
