@@ -17,7 +17,9 @@ The following [FAIRDataTeam] repositories depend on the reusable workflows from 
 - [spring-rdf-migration]
 - [spring-security-acl-mongodb]
 
-## Example
+## Examples
+
+### maven-publish
 
 An example of a publication workflow that is triggered when a release is created, and re-uses two workflows:
 
@@ -43,6 +45,51 @@ jobs:
     uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
     with:
       mvn_options: tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
+```
+
+### docker-publish
+For pull requests, nothing is uploaded, but a test build is created.
+
+The following variables and secrets must be defined in the calling repo (conforming to existing names from the FDP repos):
+ 
+- `vars.DOCKER_IMAGE_NAME`
+- `vars.DOCKER_HUB_USERNAME`
+- `secrets.DOCKER_HUB_PASSWORD`
+
+Secrets must be inherited from the caller.
+
+The workflow could be triggered on `push` and `pull_request` (see [1]). For example:
+
+```yaml
+name: publish to docker hub on push
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  publish:
+    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+    secrets: inherit
+    with:
+      push: ${{ github.event_name != 'pull_request' }}
+```
+
+Alternatively, we could push on release creation only, for example:
+
+```yaml
+name: publish to docker hub on release
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+    secrets: inherit
+    with:
+      push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
 ```
 
 ## Releases

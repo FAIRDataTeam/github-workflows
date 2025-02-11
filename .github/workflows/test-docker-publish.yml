@@ -1,0 +1,18 @@
+# This workflow tests the reusable docker-publish workflow
+
+name: test docker-publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    # FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@main
+    uses: ./.github/workflows/docker-publish.yml
+    secrets: inherit
+    with:
+      push: ${{ github.event_name != 'pull_request' }}
