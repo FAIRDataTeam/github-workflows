@@ -9,8 +9,8 @@ on:
       # calling workflow can specify inputs as follows:
       #     uses: <this reusable workflow>
       #     with:
-      #       mvn_options: <custom options>
-      mvn_options:
+      #       mvn-options: <custom options>
+      mvn-options:
         description: 'extra maven command line options (space separated)'
         default: ''
         required: false
@@ -43,6 +43,7 @@ jobs:
           cache: maven
 
       # test and verify
+      # (note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase)
       # https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-      - name: Run maven verify (skip GPG signing)
-        run: mvn --batch-mode --update-snapshots --fail-fast -Dgpg.skip ${{ inputs.mvn_options }} verify
+      - name: Run maven verify
+        run: mvn --batch-mode --update-snapshots --fail-fast ${{ inputs.mvn-options }} verify

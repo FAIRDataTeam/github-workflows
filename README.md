@@ -44,7 +44,7 @@ jobs:
   test:
     uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
     with:
-      mvn_options: tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
+      mvn_options:  -Dgpg.skip tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
 ```
 
 ### docker-publish
