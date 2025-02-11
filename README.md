@@ -47,6 +47,25 @@ jobs:
       mvn_options:  -Dgpg.skip tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
 ```
 
+### maven-verify with database
+
+The maven-verify workflow also supports optional database setup. For example:
+
+```yaml
+jobs:
+  test:
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v2
+    with:
+      # the double quotes are required for windows runners
+      mvn-options: '-D"spring.profiles.active"=testing'
+      # db settings must match those defined in the spring profile
+      db-type: postgresql
+      db-name: fdp_test
+      db-username: fdp
+      db-password: fdp
+      db-port: 54321
+```
+
 ### docker-publish
 For pull requests, nothing is uploaded, but a test build is created.
 

@@ -81,8 +81,10 @@ jobs:
 
       - # test and verify
         # Note that e.g. `mvn verify` runs all lifecycle phases up to and including the verify phase [1].
-        # Currently [2] it is not possible to pass env variables from caller to a reusable workflow, but we can specify
-        # database settings using mvn-options to override spring.datasource.url etc. (see FDP application.yml).
+        # A spring-boot profile can be specified, e.g. `mvn-options: '-D"spring.profiles.active"=testing'`.
+        # (beware: the quotes around spring.profiles.active are required when using a Windows runner)
+        # Currently [2] it is not possible to pass env variables from caller to a reusable workflow, but, if necessary,
+        # we can override settings using `mvn-options`, e.g. `spring.datasource.url` etc. (see FDP application.yml).
         # [1]: https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
         # [2]: https://docs.github.com/en/actions/sharing-automations/reusing-workflows#limitations
         name: Run maven verify
