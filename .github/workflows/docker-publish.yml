@@ -20,6 +20,16 @@ on:
         description: 'Determines if the resulting Docker image is pushed to Docker Hub'
         required: true
         type: boolean
+      context:
+        description: 'Docker build context'
+        required: false
+        default: '.'
+        type: string
+      file:
+        description: 'Path to Dockerfile, e.g. "./Dockerfile"'
+        required: false
+        default: './Dockerfile'
+        type: string
 
 jobs:
   build:
@@ -67,9 +77,9 @@ jobs:
         name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ${{ inputs.context }}
           # https://docs.docker.com/build/concepts/dockerfile/#filename
-          file: ./Dockerfile
+          file: ${{ inputs.file }}
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
