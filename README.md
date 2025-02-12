@@ -30,10 +30,10 @@ on:
     types: [created]
 jobs:
   test:
-    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v2
   publish:
     needs: test
-    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-publish.yml@v1
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-publish.yml@v2
     secrets: inherit
 ```
 
@@ -42,7 +42,7 @@ It is also possible to specify additional options for the maven-verify workflow,
 ```yaml
 jobs:
   test:
-    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v1
+    uses: FAIRDataTeam/github-workflows/.github/workflows/maven-verify.yml@v2
     with:
       mvn_options:  -Dgpg.skip tidy:check com.github.spotbugs:spotbugs-maven-plugin:check
 ```
@@ -89,7 +89,7 @@ on:
 
 jobs:
   publish:
-    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v2
     secrets: inherit
     with:
       push: ${{ github.event_name != 'pull_request' }}
@@ -105,7 +105,7 @@ on:
 
 jobs:
   publish:
-    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v1
+    uses: FAIRDataTeam/github-workflows/.github/workflows/docker-publish.yml@v2
     secrets: inherit
     with:
       push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
@@ -114,7 +114,7 @@ jobs:
 ## Releases
 
 Releases follow [semantic versioning]. 
-To get the latest stable release you can refer to the major version only, e.g. `v1` instead of `v1.2.3`.
+To get the latest stable release you can refer to the major version only, e.g. `v2` instead of `v2.3.4`.
 Also see [action versioning].
 
 >[!NOTE]

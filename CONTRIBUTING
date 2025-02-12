@@ -8,13 +8,13 @@ Also make sure to update the *major version* tag after creating a new release.
 This can be done via the command line, for example:
 
 ```bash
-git tag -a v1 -f
+git tag -a v2 -f
 git push --tags -f
 ```
 
 with `-a` (annotated) and `-f` (force).
 
-This overrides the existing `v1` tag and keeps the original message.
+This overrides the existing `v2` tag and keeps the original message.
 
 TODO: The major version tag update could also be automated via another workflow.
 
