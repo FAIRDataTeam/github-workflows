@@ -13,6 +13,8 @@ For more info about reusing workflows, see [sharing automations] documentation, 
 
 The following [FAIRDataTeam] repositories depend on the reusable workflows from this repo:
 
+- [FAIRDataPoint]
+- [FAIRDataPoint-client]
 - [rdf-resource-resolver]
 - [spring-rdf-migration]
 - [spring-security-acl-mongodb]
@@ -130,6 +132,8 @@ Also see [action versioning].
 [sharing-actions-and-workflows-with-your-organization]: https://docs.github.com/en/actions/sharing-automations/sharing-actions-and-workflows-with-your-organization
 
 [FAIRDataTeam]: https://github.com/FAIRDataTeam
+[FAIRDataPoint]: https://github.com/FAIRDataTeam/FAIRDataPoint
+[FAIRDataPoint-client]: https://github.com/FAIRDataTeam/FAIRDataPoint-client
 [rdf-resource-resolver]: https://github.com/FAIRDataTeam/rdf-resource-resolver
 [spring-rdf-migration]: https://github.com/FAIRDataTeam/spring-rdf-migration
 [spring-security-acl-mongodb]: https://github.com/FAIRDataTeam/spring-security-acl-mongodb
