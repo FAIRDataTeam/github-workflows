@@ -4,9 +4,26 @@ inputs:
   secret-token:
     description: fine-grained personal access token with content write permission for the target repo
     required: true
-  another-secret:
-    description: another secret
+    type: string
+  target-repo-owner:
+    description: target repository owner (as in <repo-owner>/<repo-name>)
     required: true
+    type: string
+  target-repo-name:
+    description: target repository name (as in <repo-owner>/<repo-name>)
+    required: true
+    type: string
+  event-type:
+    # https://docs.github.com/en/webhooks/webhook-events-and-payloads#repository_dispatch
+    description: action in repository_dispatch event
+    required: true
+    type: string
+  client-payload:
+    description: client_payload in repository_dispatch event (a JSON object)
+    required: true
+    type: string
+    default: '{}'
+
 runs:
   using: composite
   steps:
@@ -16,7 +33,16 @@ runs:
         echo "::add-mask::${{ inputs.secret-token }}"
         echo "::add-mask::${{ inputs.another-secret }}"
       shell: bash
-
-    - name: test secrets masking
-      run: echo "${{ inputs.secret-token }} and ${{ inputs.another-secret }}"
+    - name: post to github api dispatches endpoint
+      # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
+      # https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication
+      run: |
+        curl --location \
+        --fail-with-body \
+        --request POST \
+        --header "Accept: application/vnd.github+json" \
+        --header "Authorization: Bearer ${{ inputs.secret-token }}" \
+        --header "X-GitHub-Api-Version: 2022-11-28" \
+        https://api.github.com/repos/${{ inputs.target-repo-owner }}/${{ inputs.target-repo-name }}/dispatches \
+        --data '{"event_type":"${{ inputs.event-type }}","client_payload":${{ inputs.client-payload }}}'
       shell: bash

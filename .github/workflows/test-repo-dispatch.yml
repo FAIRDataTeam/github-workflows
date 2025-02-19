@@ -13,10 +13,13 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout so we can use local action
+      - name: checkout in order to use local action
         uses: actions/checkout@v4
       - name: test action
         uses: ./.github/actions/repo-dispatch
         with:
           secret-token: my-secret-token
-          another-secret: my-other-secret
+          target-repo-name: ${{ github.event.repository.name }}
+          target-repo-owner: ${{ github.repository_owner }}
+          event-type: my-event
+          client-payload: '{"my-key": "my-value"}'
