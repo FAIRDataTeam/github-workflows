@@ -1,7 +1,7 @@
 name: repository-dispatch
 description: creates repository_dispatch event in target repository
 inputs:
-  secret-token:
+  secret-token:  # beware: mask is applied below
     description: fine-grained personal access token with content write permission for the target repo
     required: true
     type: string
@@ -28,10 +28,8 @@ runs:
   using: composite
   steps:
     - # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#masking-a-value-in-a-log
-      name: mask secret inputs
-      run: |
-        echo "::add-mask::${{ inputs.secret-token }}"
-        echo "::add-mask::${{ inputs.another-secret }}"
+      name: mask secret token
+      run: echo "::add-mask::${{ inputs.secret-token }}"
       shell: bash
     - name: post to github api dispatches endpoint
       # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
