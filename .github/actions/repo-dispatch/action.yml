@@ -4,24 +4,22 @@ inputs:
   secret-token:
     description: fine-grained personal access token with content write permission for the target repo
     required: true
-  secret-token-2:
+  another-secret:
     description: another secret
     required: true
 runs:
   using: composite
   steps:
-    - # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#masking-a-value-in-a-log
-      name: mask secret token
-      run: echo "::add-mask::$SECRET_TOKEN"
-      shell: bash
-      env:
-        SECRET_TOKEN: ${{ inputs.secret-token }}
-
-    - name: mask secret token
-      run: echo "::add-mask::${{ inputs.secret-token2 }}"
-      shell: bash
+#    - # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#masking-a-value-in-a-log
+#      name: mask secret token
+#      run: echo "::add-mask::$SECRET_TOKEN"
+#      shell: bash
+#      env:
+#        SECRET_TOKEN: ${{ inputs.secret-token }}
+#
+#    - name: mask secret token
+#      run: echo "::add-mask::${{ inputs.secret-token2 }}"
+#      shell: bash
 
     - shell: bash
-      run: |
-        echo "${{ inputs.secret-token }}"
-        echo "${{ inputs.secret-token-2 }}"
+      run: echo "${{ inputs.secret-token }} and ${{ inputs.another-secret }}"
