@@ -1,0 +1,22 @@
+# This workflow tests the reusable repo-dispatch action
+
+name: test repo-dispatch action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout so we can use local action
+        uses: actions/checkout@v4
+      - name: test action
+        uses: ./.github/actions/repo-dispatch
+        with:
+          secret-token: my-secret-token
+          secret-token-2: my-secret-token-2
