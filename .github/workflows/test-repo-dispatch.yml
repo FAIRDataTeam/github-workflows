@@ -19,4 +19,4 @@ jobs:
         uses: ./.github/actions/repo-dispatch
         with:
           secret-token: my-secret-token
-          secret-token-2: my-secret-token-2
+          another-secret: my-other-secret

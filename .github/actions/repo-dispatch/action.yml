@@ -10,16 +10,13 @@ inputs:
 runs:
   using: composite
   steps:
-#    - # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#masking-a-value-in-a-log
-#      name: mask secret token
-#      run: echo "::add-mask::$SECRET_TOKEN"
-#      shell: bash
-#      env:
-#        SECRET_TOKEN: ${{ inputs.secret-token }}
-#
-#    - name: mask secret token
-#      run: echo "::add-mask::${{ inputs.secret-token2 }}"
-#      shell: bash
+    - # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#masking-a-value-in-a-log
+      name: mask secret inputs
+      run: |
+        echo "::add-mask::${{ inputs.secret-token }}"
+        echo "::add-mask::${{ inputs.another-secret }}"
+      shell: bash
 
-    - shell: bash
+    - name: test secrets masking
       run: echo "${{ inputs.secret-token }} and ${{ inputs.another-secret }}"
+      shell: bash
