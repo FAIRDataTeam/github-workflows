@@ -18,7 +18,7 @@ jobs:
       - name: test action
         uses: ./.github/actions/repo-dispatch
         with:
-          secret-token: my-secret-token
+          secret-token: ${{ secrets.personal_access_token }}
           target-repo-name: ${{ github.event.repository.name }}
           target-repo-owner: ${{ github.repository_owner }}
           event-type: my-event
