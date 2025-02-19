@@ -9,4 +9,4 @@ jobs:
     steps:
       - run: | 
           echo "action: ${{ github.event.action }}"
-          echo "payload: ${{ github.event.client_payload }}"
+          echo "payload: ${{ github.event.client_payload.my-key }}"
