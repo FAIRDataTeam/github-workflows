@@ -30,6 +30,13 @@ on:
         required: false
         default: './Dockerfile'
         type: string
+      platforms:
+        # https://docs.docker.com/build/building/multi-platform/
+        # https://docs.docker.com/reference/cli/docker/buildx/build/#platform
+        description: 'Multi-platform builds'
+        required: false
+        default: linux/amd64,linux/arm64
+        type: string
 
 jobs:
   build:
@@ -80,7 +87,7 @@ jobs:
           context: ${{ inputs.context }}
           # https://docs.docker.com/build/concepts/dockerfile/#filename
           file: ${{ inputs.file }}
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ inputs.platforms }}
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           # https://docs.docker.com/build/metadata/annotations/
