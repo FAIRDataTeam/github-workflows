@@ -15,11 +15,11 @@ inputs:
     type: string
   event-type:
     # https://docs.github.com/en/webhooks/webhook-events-and-payloads#repository_dispatch
-    description: action in repository_dispatch event
+    description: action in repository_dispatch event (as in github.event.action)
     required: true
     type: string
   client-payload:
-    description: client_payload in repository_dispatch event (a JSON object)
+    description: client_payload in repository_dispatch event (a JSON object, as in github.event.client_payload)
     required: true
     type: string
     default: '{}'
