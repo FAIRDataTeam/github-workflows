@@ -1,0 +1,12 @@
+name: test the receiving end of the repo-dispatch action
+
+on:
+  repository_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: | 
+          echo "action: ${{ github.event.action }}"
+          echo "payload: ${{ github.event.client_payload.my-key }}"
