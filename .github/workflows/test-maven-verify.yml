@@ -1,0 +1,42 @@
+name: test-maven-verify.yml
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        java:
+          - 17
+          - 21
+        db:
+          - type: mongodb
+            name: ''  # not used for mongo
+            username: ''  # not used for mongo
+            password: ''  # not used for mongo
+            port: 0  # not used for mongo
+            version: 8
+          - type: postgresql
+            name: 'test'
+            username: 'test'
+            password: 'test'
+            port: 5432
+            version: 0  # not used for postgres
+    uses: ./.github/workflows/maven-verify.yml
+    with:
+      runner: ubuntu-24.04
+      java-version: ${{ matrix.java }}
+      db-type: ${{ matrix.db.type }}
+      db-name: ${{ matrix.db.name }}
+      db-username: ${{ matrix.db.username }}
+      db-password: ${{ matrix.db.password }}
+      db-port: ${{ matrix.db.port }}
+      db-version: ${{ matrix.db.version }}

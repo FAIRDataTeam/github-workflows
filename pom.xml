@@ -1,0 +1,8 @@
+<!-- This is a minimal pom file, just for testing purposes. -->
+<!-- https://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Minimal_POM -->
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.fairdatateam.test</groupId>
+    <artifactId>test-maven-verify-workflow</artifactId>
+    <version>1</version>
+</project>
