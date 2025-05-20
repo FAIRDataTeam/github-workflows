@@ -49,7 +49,7 @@ on:
         required: false
         type: number
       db-version:
-        default: 5
+        default: 8
         required: false
         type: number
 
