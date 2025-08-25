@@ -15,7 +15,4 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     secrets: inherit
     with:
-      # https://github.com/docker/build-push-action?tab=readme-ov-file#inputs requires list as newline-delimited string
-      build-args: |
-        PROJECT_VERSION=1.2.3
       push: ${{ github.event_name != 'pull_request' }}
