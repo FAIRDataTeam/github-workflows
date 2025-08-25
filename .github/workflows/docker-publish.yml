@@ -20,6 +20,13 @@ on:
         description: 'Determines if the resulting Docker image is pushed to Docker Hub'
         required: true
         type: boolean
+      build-args:
+        # Example of newline-delimited string (https://github.com/docker/build-push-action?tab=readme-ov-file#inputs):
+        #   build-args: |
+        #     PROJECT_VERSION=1.2.3
+        description: 'List of Docker build arguments (--build-arg), formatted as newline-delimited string'
+        required: false
+        type: string
       context:
         description: 'Docker build context'
         required: false
@@ -85,6 +92,8 @@ jobs:
         name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
+          # https://github.com/docker/build-push-action?tab=readme-ov-file#inputs
+          build-args: ${{ inputs.build-args }}
           context: ${{ inputs.context }}
           # https://docs.docker.com/build/concepts/dockerfile/#filename
           file: ${{ inputs.file }}
