@@ -20,6 +20,11 @@ on:
         description: 'Determines if the resulting Docker image is pushed to Docker Hub'
         required: true
         type: boolean
+      build-args:
+        description: 'List of Docker build arguments (--build-arg), formatted as JSON array'
+        required: false
+        default: "[]"  # e.g. "['PROJECT_VERSION=1.2.3', '...']"
+        type: string
       context:
         description: 'Docker build context'
         required: false
@@ -85,6 +90,8 @@ jobs:
         name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
+          # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#fromjson
+          build-args: ${{ fromJSON(inputs.build-args) }}
           context: ${{ inputs.context }}
           # https://docs.docker.com/build/concepts/dockerfile/#filename
           file: ${{ inputs.file }}

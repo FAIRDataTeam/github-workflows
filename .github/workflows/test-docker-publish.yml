@@ -15,4 +15,5 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     secrets: inherit
     with:
+      build-args: "['PROJECT_VERSION=2.3.4']"
       push: ${{ github.event_name != 'pull_request' }}
