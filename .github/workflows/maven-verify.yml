@@ -68,7 +68,7 @@ jobs:
         # (see readme files in https://github.com/actions/runner-images/tree/main/images)
         name: Setup PostgreSQL database
         if: inputs.db-type == 'postgresql'
-        uses: ikalnytskyi/action-setup-postgres@v7
+        uses: ikalnytskyi/action-setup-postgres@v8
         with:
           username: ${{ inputs.db-username }}
           password: ${{ inputs.db-password }}
