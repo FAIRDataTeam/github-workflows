@@ -27,15 +27,24 @@ jobs:
         # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
         include:
           - db_type: mongodb
+            db_name: ''
+            db_username: ''
+            db_password: ''
+            db_port: 0
             db_version: 8
           - runner: windows-2022
             db_type: mongodb
+            db_name: ''
+            db_username: ''
+            db_password: ''
+            db_port: 0
             db_version: 6
           - db_type: postgresql
             db_name: 'test'
             db_username: 'test'
             db_password: 'test'
             db_port: 5432
+            db_version: 0
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
