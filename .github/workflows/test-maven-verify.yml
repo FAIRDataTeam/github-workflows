@@ -33,6 +33,8 @@ jobs:
             password: 'test'
             port: 5432
             version: 0  # not used for postgres
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-expanding-configurations
+        # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
         include:
           - runner: windows-2022
             db.version: 6
