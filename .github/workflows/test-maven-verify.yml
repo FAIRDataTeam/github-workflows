@@ -37,8 +37,7 @@ jobs:
         # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
         include:
           - runner: windows-2022
-            db.type: mongodb
-            db.version: 6
+            db: { type: mongodb, version: 6 }
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
