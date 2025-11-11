@@ -33,6 +33,9 @@ jobs:
             password: 'test'
             port: 5432
             version: 0  # not used for postgres
+        include:
+          - runner: windows-2022
+            db.version: 6
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
