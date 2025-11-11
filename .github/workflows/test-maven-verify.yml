@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         java:
-          - 17
           - 21
         db:
           - type: mongodb
