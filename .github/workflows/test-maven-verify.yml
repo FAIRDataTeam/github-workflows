@@ -14,6 +14,10 @@ jobs:
   test:
     strategy:
       matrix:
+        runner:
+          - ubuntu-24.04
+          - windows-2022
+          - macos-14
         java:
           - 21
         db:
@@ -31,7 +35,7 @@ jobs:
             version: 0  # not used for postgres
     uses: ./.github/workflows/maven-verify.yml
     with:
-      runner: ubuntu-24.04
+      runner: ${{ matrix.runner }}
       java-version: ${{ matrix.java }}
       db-type: ${{ matrix.db.type }}
       db-name: ${{ matrix.db.name }}
