@@ -31,7 +31,7 @@ jobs:
             db_version: 8
           - runner: windows-2022
             db_type: mongodb
-            db_version: '' # defaults to 5 (https://github.com/ankane/setup-mongodb)
+            db_version: 5 # depends on runner, see https://github.com/ankane/setup-mongodb
           - db_type: postgresql
             db_name: 'test'
             db_username: 'test'
@@ -46,4 +46,4 @@ jobs:
       db-username: ${{ matrix.db_username || '' }}
       db-password: ${{ matrix.db_password || '' }}
       db-port: ${{ matrix.db_port || 0 }}
-      db-version: ${{ matrix.db_version || '' }}
+      db-version: ${{ matrix.db_version || 0 }}
