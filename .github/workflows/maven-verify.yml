@@ -120,3 +120,4 @@ jobs:
         with:
           name: "surefire-reports-${{ inputs.runner }}"
           path: target/surefire-reports/**
+          retention-days: 7
