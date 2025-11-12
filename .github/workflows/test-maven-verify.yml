@@ -16,7 +16,7 @@ jobs:
       matrix:
         runner:
           - ubuntu-24.04
-          - windows-2022
+          - windows-2025
           - macos-14
         java_version:
           - 21
@@ -29,9 +29,9 @@ jobs:
         include:
           - db_type: mongodb
             db_version: 8
-          - runner: windows-2022
+          - runner: windows-2025
             db_type: mongodb
-            db_version: 5 # depends on runner, see https://github.com/ankane/setup-mongodb
+            db_version: 7 # depends on runner, see https://github.com/ankane/setup-mongodb
           - db_type: postgresql
             db_name: 'test'
             db_username: 'test'
