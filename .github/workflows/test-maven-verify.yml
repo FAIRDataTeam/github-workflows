@@ -37,7 +37,7 @@ jobs:
             db_name: 'test'
             db_username: 'test'
             db_password: 'test'
-            db_port: 5432
+            db_port: 54321
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
