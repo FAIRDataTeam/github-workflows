@@ -14,29 +14,37 @@ jobs:
   test:
     strategy:
       matrix:
-        java:
-          - 17
+        runner:
+          # https://github.com/actions/runner-images
+          - ubuntu-24.04
+          - windows-2025
+          - macos-14
+        java_version:
           - 21
-        db:
-          - type: mongodb
-            name: ''  # not used for mongo
-            username: ''  # not used for mongo
-            password: ''  # not used for mongo
-            port: 0  # not used for mongo
-            version: 8
-          - type: postgresql
-            name: 'test'
-            username: 'test'
-            password: 'test'
-            port: 5432
-            version: 0  # not used for postgres
+        db_type:
+          - mongodb
+          - postgresql
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-expanding-configurations
+        # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#operators
+        include:
+          - db_type: mongodb
+            db_version: 8
+          - runner: windows-2025
+            db_type: mongodb
+            db_version: 7 # depends on runner, see https://github.com/ankane/setup-mongodb
+          - db_type: postgresql
+            db_name: 'test'
+            db_username: 'test'
+            db_password: 'test'
+            db_port: 5432
     uses: ./.github/workflows/maven-verify.yml
     with:
-      runner: ubuntu-24.04
-      java-version: ${{ matrix.java }}
-      db-type: ${{ matrix.db.type }}
-      db-name: ${{ matrix.db.name }}
-      db-username: ${{ matrix.db.username }}
-      db-password: ${{ matrix.db.password }}
-      db-port: ${{ matrix.db.port }}
-      db-version: ${{ matrix.db.version }}
+      runner: ${{ matrix.runner }}
+      java-version: ${{ matrix.java_version }}
+      db-type: ${{ matrix.db_type }}
+      db-name: ${{ matrix.db_name || '' }}
+      db-username: ${{ matrix.db_username || '' }}
+      db-password: ${{ matrix.db_password || '' }}
+      db-port: ${{ matrix.db_port || 0 }}
+      db-version: ${{ matrix.db_version || 0 }}
