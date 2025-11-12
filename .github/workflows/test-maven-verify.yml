@@ -18,13 +18,14 @@ jobs:
           - ubuntu-24.04
           - windows-2022
           - macos-14
-        java:
+        java_version:
           - 21
         db_type:
           - mongodb
           - postgresql
         # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-expanding-configurations
         # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#operators
         include:
           - db_type: mongodb
             db_version: 8
@@ -39,7 +40,7 @@ jobs:
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
-      java-version: ${{ matrix.java }}
+      java-version: ${{ matrix.java_version }}
       db-type: ${{ matrix.db_type }}
       db-name: ${{ matrix.db_name || '' }}
       db-username: ${{ matrix.db_username || '' }}
