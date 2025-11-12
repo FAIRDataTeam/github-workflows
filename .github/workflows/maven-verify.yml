@@ -112,3 +112,11 @@ jobs:
         # [2]: https://docs.github.com/en/actions/sharing-automations/reusing-workflows#limitations
         name: Run maven verify
         run: mvn --batch-mode --update-snapshots --fail-fast ${{ inputs.mvn-options }} verify
+
+      - # https://github.com/actions/upload-artifact
+        name: Upload surefire reports
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: "surefire-reports-${{ inputs.runner }}"
+          path: target/surefire-reports/**
