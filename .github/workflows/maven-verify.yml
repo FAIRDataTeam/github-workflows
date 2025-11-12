@@ -75,6 +75,10 @@ jobs:
           database: ${{ inputs.db-name }}
           port: ${{ inputs.db-port }}
 
+      - name: Test PostgreSQL connection
+        if: inputs.db-type == 'postgresql'
+        run: pg_isready --host=localhost --port=${{ inputs.db-port }} --dbname=${{ inputs.db-name }} --username=${{ inputs.db-username }}
+
       - # https://github.com/ankane/setup-mongodb
         # copied from FDP v1.17.2 build.yml
         # TODO: ankane/setup-mongodb is a one-man band, should we use an alternative?
