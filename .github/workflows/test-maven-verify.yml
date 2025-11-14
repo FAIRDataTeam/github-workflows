@@ -48,4 +48,4 @@ jobs:
       db-username: ${{ matrix.db-username || '' }}
       db-password: ${{ matrix.db-password || '' }}
       db-port: ${{ matrix.db-port || 0 }}
-      db-version: ${{ matrix.db-version || 0 }}
+      db-version: ${{ matrix.db-version }}

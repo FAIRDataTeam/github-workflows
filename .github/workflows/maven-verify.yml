@@ -28,8 +28,7 @@ on:
         type: number
       db-type:
         description: 'type of database: postgresql or mongodb'
-        default: ''
-        required: false
+        required: true
         type: string
       db-name:
         description: 'name of database to be created'
@@ -49,8 +48,7 @@ on:
         required: false
         type: number
       db-version:
-        default: 8
-        required: false
+        required: true
         type: number
 
 jobs:
