@@ -74,6 +74,7 @@ jobs:
           password: ${{ inputs.db-password }}
           database: ${{ inputs.db-name }}
           port: ${{ inputs.db-port }}
+          postgres-version: ${{ inputs.db-version }}
 
       - name: Test PostgreSQL connection
         if: inputs.db-type == 'postgresql'
