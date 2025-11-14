@@ -19,33 +19,33 @@ jobs:
           - ubuntu-24.04
           - windows-2025
           - macos-14
-        java_version:
+        java-version:
           - 21
-        db_type:
+        db-type:
           - mongodb
           - postgresql
         # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-expanding-configurations
         # https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations
         # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#operators
         include:
-          - db_type: mongodb
-            db_version: 8
+          - db-type: mongodb
+            db-version: 8
           - runner: windows-2025
-            db_type: mongodb
-            db_version: 7 # depends on runner, see https://github.com/ankane/setup-mongodb
-          - db_type: postgresql
-            db_name: 'test'
-            db_username: 'test'
-            db_password: 'test'
-            db_port: 54321
-            db_version: 17
+            db-type: mongodb
+            db-version: 7 # depends on runner, see https://github.com/ankane/setup-mongodb
+          - db-type: postgresql
+            db-name: 'test'
+            db-username: 'test'
+            db-password: 'test'
+            db-port: 54321
+            db-version: 17
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
-      java-version: ${{ matrix.java_version }}
-      db-type: ${{ matrix.db_type }}
-      db-name: ${{ matrix.db_name || '' }}
-      db-username: ${{ matrix.db_username || '' }}
-      db-password: ${{ matrix.db_password || '' }}
-      db-port: ${{ matrix.db_port || 0 }}
-      db-version: ${{ matrix.db_version || 0 }}
+      java-version: ${{ matrix.java-version }}
+      db-type: ${{ matrix.db-type }}
+      db-name: ${{ matrix.db-name || '' }}
+      db-username: ${{ matrix.db-username || '' }}
+      db-password: ${{ matrix.db-password || '' }}
+      db-port: ${{ matrix.db-port || 0 }}
+      db-version: ${{ matrix.db-version || 0 }}
