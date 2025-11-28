@@ -58,7 +58,7 @@ jobs:
     steps:
       - # https://github.com/actions/checkout
         name: Clone repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - # https://github.com/ikalnytskyi/action-setup-postgres
         # copied from FDP develop (3ff9f64) build.yml
