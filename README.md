@@ -62,6 +62,7 @@ jobs:
       mvn-options: '-D"spring.profiles.active"=testing'
       # db settings must match those defined in the spring profile
       db-type: postgresql
+      db-version: 17
       db-name: fdp_test
       db-username: fdp
       db-password: fdp
