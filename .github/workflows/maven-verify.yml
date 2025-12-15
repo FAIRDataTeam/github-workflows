@@ -115,7 +115,7 @@ jobs:
       - # https://github.com/actions/upload-artifact
         name: Upload surefire reports
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: "surefire-reports-${{ inputs.runner }}"
           path: target/surefire-reports/**
