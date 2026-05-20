@@ -56,7 +56,7 @@ jobs:
       - # https://github.com/docker/metadata-action
         name: Extract git metadata for Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           # e.g. fairdata/fairdatapoint
           images: |
