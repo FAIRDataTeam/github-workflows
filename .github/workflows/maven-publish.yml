@@ -19,7 +19,18 @@
 
 name: Maven publish
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      # calling workflow can specify inputs as follows:
+      #     uses: <this reusable workflow>
+      #     with:
+      #       mvn-options: <custom options>
+      mvn-options:
+        description: 'extra maven command line options (space separated)'
+        default: ''
+        required: false
+        type: string
 
 jobs:
   publish:
@@ -43,7 +54,7 @@ jobs:
 
       - name: Publish to Maven Central Portal
         # if autoPublish is false (see pom.xml), we need to publish manually via https://central.sonatype.com/publishing/deployments
-        run: mvn --batch-mode deploy
+        run: mvn --batch-mode --fail-fast ${{ inputs.mvn-options }} deploy
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
