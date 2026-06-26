@@ -32,7 +32,7 @@ runs:
       run: echo "::add-mask::${{ inputs.secret-token }}"
       shell: bash
     - name: post to github api dispatches endpoint
-      # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
+      # https://docs.github.com/en/rest/repos/repos?apiVersion=2026-03-10#create-a-repository-dispatch-event
       # https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication
       run: |
         curl --location \
@@ -40,7 +40,7 @@ runs:
         --request POST \
         --header "Accept: application/vnd.github+json" \
         --header "Authorization: Bearer ${{ inputs.secret-token }}" \
-        --header "X-GitHub-Api-Version: 2022-11-28" \
+        --header "X-GitHub-Api-Version: 2026-03-10" \
         https://api.github.com/repos/${{ inputs.target-repo-owner }}/${{ inputs.target-repo-name }}/dispatches \
         --data '{"event_type":"${{ inputs.event-type }}","client_payload":${{ inputs.client-payload }}}'
       shell: bash
