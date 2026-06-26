@@ -1,3 +1,5 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions/metadata-syntax
+
 name: repository-dispatch
 description: creates repository_dispatch event in target repository
 inputs:
