@@ -22,4 +22,7 @@ jobs:
           target-repo-name: ${{ github.event.repository.name }}
           target-repo-owner: ${{ github.repository_owner }}
           event-type: my-custom-event-type
-          client-payload: '{"my-key": "my-value"}'
+          client-payload: |
+            {
+              "my-key": "my-value"
+            }
