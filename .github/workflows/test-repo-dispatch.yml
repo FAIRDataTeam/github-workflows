@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: checkout in order to use local action
         uses: actions/checkout@v7
-      - name: test action
+      - name: test the repo-dispatch action (and usage example)
         uses: ./.github/actions/repo-dispatch
         with:
           secret-token: ${{ secrets.personal_access_token }}
