@@ -15,7 +15,7 @@ inputs:
     type: string
   event-type:
     # https://docs.github.com/en/webhooks/webhook-events-and-payloads#repository_dispatch
-    description: action in repository_dispatch event (as in github.event.action)
+    description: custom event type string (e.g. for filtering in on.repository_dispatch.types)
     required: true
     type: string
   client-payload:
