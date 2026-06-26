@@ -1,4 +1,5 @@
 name: test the receiving end of the repo-dispatch action
+# TODO: looks like this is not doing anything here... perhaps not possible in the same repo?
 
 on:
   repository_dispatch:
