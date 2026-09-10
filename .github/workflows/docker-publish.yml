@@ -44,10 +44,17 @@ on:
         required: false
         default: linux/amd64,linux/arm64
         type: string
+      repo-owner:
+        description: 'The publish job only runs if repository owner matches this value, so it will not run on forks.'
+        required: false
+        default: 'FAIRDataTeam'
+        type: string
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-only-run-job-for-specific-repository
+    if: github.repository_owner == inputs.repo-owner
     steps:
       - # https://github.com/actions/checkout
         name: Clone git repo
