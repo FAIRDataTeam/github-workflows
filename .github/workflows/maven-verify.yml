@@ -96,7 +96,7 @@ jobs:
       - # on ubuntu we can simply use docker to set up mongodb
         name: Set up MongoDB (ubuntu)
         if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
-        run: docker run --name mongo -p 127.0.0.1:27017:27017 -d -rm docker.io/mongo:${{ inputs.db-version }}
+        run: docker run --name mongo --rm -p 127.0.0.1:27017:27017 -d docker.io/mongo:${{ inputs.db-version }}
 
       - # https://github.com/actions/setup-java
         name: Setup Java
