@@ -94,13 +94,11 @@ jobs:
           ${{ inputs.db-version < 6 && 'mongo' || 'mongosh' }} --eval "db.version()"
 
       - # on ubuntu we can simply use docker to set up mongodb
-        name: Set up MongoDB (ubuntu)
+        name: Set up MongoDB and check connection (ubuntu)
         if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
-        run: docker run --rm --publish 127.0.0.1:27017:27017 --detach docker.io/mongo:${{ inputs.db-version }}
-
-      - name: Check MongoDB connection (ubuntu)
-        if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
-        run: docker run --rm alpine/mongosh mongosh --eval "db.version()"
+        run: |
+          export MONGO_VERSION=${{ inputs.db-version }}
+          docker compose -f compose.mongo.yaml up -d
 
       - # https://github.com/actions/setup-java
         name: Setup Java
