@@ -2,6 +2,7 @@
 services:
   mongo:
     image: "mongo:${MONGO_VERSION}"
+    restart: no
     ports:
       - "127.0.0.1:27017:27017"
     healthcheck:
@@ -11,6 +12,7 @@ services:
       start_period: 30s
   mongosh:
     image: alpine/mongosh
+    restart: no
     depends_on:
       mongo:
         condition: service_healthy
