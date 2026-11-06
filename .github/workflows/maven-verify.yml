@@ -96,8 +96,10 @@ jobs:
       - # on ubuntu we can simply use docker to set up mongodb
         name: Set up MongoDB and check connection (ubuntu)
         if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
+        # todo: revert to ${{ inputs.db-version }} once mongodb fixes incompatibility with linux kernel
+        #  https://jira.mongodb.org/browse/SERVER-125742
         run: |
-          export MONGO_VERSION=${{ inputs.db-version }}
+          export MONGO_VERSION=8.2.12
           docker compose -f compose.mongo.yaml up -d
 
       - # https://github.com/actions/setup-java
