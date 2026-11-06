@@ -83,7 +83,7 @@ jobs:
         # TODO: ankane/setup-mongodb is a one-man band, should we use an alternative?
         # (see e.g. https://github.com/supercharge/mongodb-github-action)
         name: Set up MongoDB
-        if: inputs.db-type == 'mongodb'
+        if: inputs.db-type == 'mongodb' && !startsWith(inputs.runner, 'ubuntu')
         uses: ankane/setup-mongodb@a01a9a4888b0b7bb1813656d8653fb2b06ae50d8
         with:
           mongodb-version: ${{ inputs.db-version }}
