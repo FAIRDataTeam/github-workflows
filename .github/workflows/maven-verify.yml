@@ -89,7 +89,7 @@ jobs:
           mongodb-version: ${{ inputs.db-version }}
 
       - name: Check MongoDB
-        if: inputs.db-type == 'mongodb'
+        if: inputs.db-type == 'mongodb' && !startsWith(inputs.runner, 'ubuntu')
         run: |
           ${{ inputs.db-version < 6 && 'mongo' || 'mongosh' }} --eval "db.version()"
 
