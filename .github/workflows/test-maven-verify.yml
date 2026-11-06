@@ -29,7 +29,7 @@ jobs:
         # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#operators
         include:
           - db-type: mongodb
-            db-version: "8.2.12"
+            db-version: "8"
           - runner: windows-2025
             db-type: mongodb
             db-version: "7" # depends on runner, see https://github.com/ankane/setup-mongodb
