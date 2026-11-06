@@ -84,7 +84,7 @@ jobs:
         # (see e.g. https://github.com/supercharge/mongodb-github-action)
         name: Set up MongoDB
         if: inputs.db-type == 'mongodb'
-        uses: ankane/setup-mongodb@v1
+        uses: ankane/setup-mongodb@a01a9a4888b0b7bb1813656d8653fb2b06ae50d8
         with:
           mongodb-version: ${{ inputs.db-version }}
 
