@@ -23,7 +23,7 @@ on:
         type: string
       java-version:
         description: 'java version for use with the setup-java action'
-        default: 21
+        default: 25
         required: false
         type: number
       db-type:
