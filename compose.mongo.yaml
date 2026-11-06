@@ -1,0 +1,21 @@
+# this file sets up mongodb for use in the maven-verify workflow
+services:
+  mongo:
+    image: "mongo:${MONGO_VERSION}"
+    restart: no
+    ports:
+      - "127.0.0.1:27017:27017"
+    healthcheck:
+      test: |
+        [ $(mongosh --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+      start_interval: 3s
+      start_period: 30s
+  mongosh:
+    image: alpine/mongosh
+    restart: no
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command:
+      - mongosh
+      - --eval "db.version()"

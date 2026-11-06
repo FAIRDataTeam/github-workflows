@@ -82,16 +82,25 @@ jobs:
         # copied from FDP v1.17.2 build.yml
         # TODO: ankane/setup-mongodb is a one-man band, should we use an alternative?
         # (see e.g. https://github.com/supercharge/mongodb-github-action)
-        name: Set up MongoDB
-        if: inputs.db-type == 'mongodb'
-        uses: ankane/setup-mongodb@v1
+        name: Set up MongoDB (windows or macos)
+        if: inputs.db-type == 'mongodb' && !startsWith(inputs.runner, 'ubuntu')
+        uses: ankane/setup-mongodb@3dcf3e3bae4fb7a00d99323e43e53aff3e52781e
         with:
           mongodb-version: ${{ inputs.db-version }}
 
-      - name: Check MongoDB
-        if: inputs.db-type == 'mongodb'
+      - name: Check MongoDB connection (windows or macos)
+        if: inputs.db-type == 'mongodb' && !startsWith(inputs.runner, 'ubuntu')
         run: |
           ${{ inputs.db-version < 6 && 'mongo' || 'mongosh' }} --eval "db.version()"
+
+      - # on ubuntu we can simply use docker to set up mongodb
+        name: Set up MongoDB and check connection (ubuntu)
+        if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
+        # todo: revert to ${{ inputs.db-version }} once mongodb fixes incompatibility with linux kernel
+        #  https://jira.mongodb.org/browse/SERVER-125742
+        run: |
+          export MONGO_VERSION=8.2.12
+          docker compose -f compose.mongo.yaml up -d
 
       - # https://github.com/actions/setup-java
         name: Setup Java
