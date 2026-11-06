@@ -20,7 +20,7 @@ jobs:
           - windows-2025
           - macos-14
         java-version:
-          - 21
+          - '21'
         db-type:
           - mongodb
           - postgresql
@@ -29,16 +29,16 @@ jobs:
         # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#operators
         include:
           - db-type: mongodb
-            db-version: 8.2.12
+            db-version: '8.2.12'
           - runner: windows-2025
             db-type: mongodb
-            db-version: 7 # depends on runner, see https://github.com/ankane/setup-mongodb
+            db-version: '7' # depends on runner, see https://github.com/ankane/setup-mongodb
           - db-type: postgresql
             db-name: 'test'
             db-username: 'test'
             db-password: 'test'
             db-port: 54321
-            db-version: 17
+            db-version: '17'
     uses: ./.github/workflows/maven-verify.yml
     with:
       runner: ${{ matrix.runner }}
