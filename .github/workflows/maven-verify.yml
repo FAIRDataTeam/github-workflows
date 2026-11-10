@@ -55,6 +55,18 @@ jobs:
   build:
     runs-on: ${{ inputs.runner }}
 
+    services:
+      mongodb:
+        # set empty image to disable service, as described in docs:
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idservicesservice_idimage
+        # todo: use ${{ inputs.db-version }} when mongodb fixes incompatibility with linux kernel
+        image: ${{ inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu') && 'mongo:8.2.12' || '' }}
+        # https://docs.docker.com/reference/cli/docker/container/create/#options
+        options: >-
+          --health-cmd "mongosh --quiet --eval \"db.adminCommand('ping')\" || exit 1"
+        ports:
+          - 27017:27017
+
     steps:
       - # https://github.com/actions/checkout
         name: Clone repository
@@ -92,15 +104,6 @@ jobs:
         if: inputs.db-type == 'mongodb' && !startsWith(inputs.runner, 'ubuntu')
         run: |
           ${{ inputs.db-version < 6 && 'mongo' || 'mongosh' }} --eval "db.version()"
-
-      - # on ubuntu we can simply use docker to set up mongodb
-        name: Set up MongoDB and check connection (ubuntu)
-        if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
-        # todo: revert to ${{ inputs.db-version }} once mongodb fixes incompatibility with linux kernel
-        #  https://jira.mongodb.org/browse/SERVER-125742
-        run: |
-          export MONGO_VERSION=8.2.12
-          docker compose -f compose.mongo.yaml up -d
 
       - # https://github.com/actions/setup-java
         name: Setup Java
