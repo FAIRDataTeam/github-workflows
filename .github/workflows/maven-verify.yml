@@ -57,8 +57,10 @@ jobs:
 
     services:
       mongodb:
-        if: inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu')
-        image: mongo:8.2.12  # todo: use ${{ inputs.db-version }} when mongodb fixes incompatibility with linux kernel
+        # set empty image to disable service, as described in docs:
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idservicesservice_idimage
+        # todo: use ${{ inputs.db-version }} when mongodb fixes incompatibility with linux kernel
+        image: ${{ inputs.db-type == 'mongodb' && startsWith(inputs.runner, 'ubuntu') && 'mongo:8.2.12' || '' }}
         # https://docs.docker.com/reference/cli/docker/container/create/#options
         options: >-
           --health-cmd "mongosh --quiet --eval \"db.adminCommand('ping')\" || exit 1"
